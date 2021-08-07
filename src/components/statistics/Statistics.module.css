@@ -1,5 +1,6 @@
-.text {
+.Text {
   font-size: 22px;
   color: rgb(68, 66, 66);
   margin-bottom: 7px;
+  text-transform: capitalize;
 }

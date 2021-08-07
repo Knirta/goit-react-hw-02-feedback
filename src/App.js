@@ -1,22 +1,59 @@
 import React, { Component } from "react";
 import Container from "./components/countainer";
-import Feedback from "./components/feedback";
+import FeedbackOptions from "./components/feedbackOptions";
 import Statisctics from "./components/statistics";
+import Section from "./components/section";
+import Notification from "./components/notification";
 
 class App extends Component {
-  state = { good: 0, neutral: 0, bad: 0 };
+  static defaultProps = {
+    initialValue: 0,
+  };
+
+  state = {
+    good: this.props.initialValue,
+    neutral: this.props.initialValue,
+    bad: this.props.initialValue,
+  };
 
   addVoice = (name) => {
     this.setState((prevState) => ({ [name]: prevState[name] + 1 }));
   };
 
+  countTotalFeedback = () => {
+    let total = 0;
+    for (const key in this.state) {
+      total += this.state[key];
+    }
+    return total;
+  };
+
+  countPositiveFeedbackPercentage = () => {
+    const total = this.countTotalFeedback();
+    const percentage = (parseInt(this.state.good) / total) * 100;
+    return total ? percentage.toFixed(0) : 0;
+  };
+
   render() {
+    const total = this.countTotalFeedback();
     const feedbacks = Object.entries(this.state);
     const names = feedbacks.map(([name]) => name);
     return (
       <Container>
-        <Feedback names={names} handler={this.addVoice} />
-        <Statisctics feedbacks={feedbacks} />
+        <Section title="Please leave feedback">
+          <FeedbackOptions names={names} onLeaveFeedback={this.addVoice} />
+        </Section>
+        <Section title="Statistics">
+          {total ? (
+            <Statisctics
+              feedbacks={feedbacks}
+              total={this.countTotalFeedback()}
+              positivePercentage={this.countPositiveFeedbackPercentage()}
+            />
+          ) : (
+            <Notification message="No feedback given" />
+          )}
+        </Section>
       </Container>
     );
   }
