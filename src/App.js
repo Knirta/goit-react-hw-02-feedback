@@ -16,8 +16,8 @@ class App extends Component {
     bad: this.props.initialValue,
   };
 
-  addVoice = (name) => {
-    this.setState((prevState) => ({ [name]: prevState[name] + 1 }));
+  addVoice = (option) => {
+    this.setState((prevState) => ({ [option]: prevState[option] + 1 }));
   };
 
   countTotalFeedback = () =>
@@ -30,21 +30,21 @@ class App extends Component {
   };
 
   render() {
-    console.log(typeof this.countPositiveFeedbackPercentage());
-    const total = this.countTotalFeedback();
+    const options = Object.keys(this.state);
     const feedbacks = Object.entries(this.state);
-    const names = feedbacks.map(([name]) => name);
+    const total = this.countTotalFeedback();
+    const positivePercentage = this.countPositiveFeedbackPercentage();
     return (
       <Container>
         <Section title="Please leave feedback">
-          <FeedbackOptions names={names} onLeaveFeedback={this.addVoice} />
+          <FeedbackOptions options={options} onLeaveFeedback={this.addVoice} />
         </Section>
         <Section title="Statistics">
           {total ? (
             <Statisctics
               feedbacks={feedbacks}
-              total={this.countTotalFeedback()}
-              positivePercentage={this.countPositiveFeedbackPercentage()}
+              total={total}
+              positivePercentage={positivePercentage}
             />
           ) : (
             <Notification message="No feedback given" />
