@@ -20,21 +20,17 @@ class App extends Component {
     this.setState((prevState) => ({ [name]: prevState[name] + 1 }));
   };
 
-  countTotalFeedback = () => {
-    let total = 0;
-    for (const key in this.state) {
-      total += this.state[key];
-    }
-    return total;
-  };
+  countTotalFeedback = () =>
+    Object.values(this.state).reduce((acc, curr) => acc + curr, 0);
 
   countPositiveFeedbackPercentage = () => {
     const total = this.countTotalFeedback();
-    const percentage = (parseInt(this.state.good) / total) * 100;
-    return total ? percentage.toFixed(0) : 0;
+    const percentage = parseInt((this.state.good / total) * 100);
+    return total ? percentage : 0;
   };
 
   render() {
+    console.log(typeof this.countPositiveFeedbackPercentage());
     const total = this.countTotalFeedback();
     const feedbacks = Object.entries(this.state);
     const names = feedbacks.map(([name]) => name);
