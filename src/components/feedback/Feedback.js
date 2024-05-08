@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
-import s from "./Statistics.module.css";
+import s from "./Feedback.module.css";
 
-const Statisctics = ({ feedbacks, total, positivePercentage }) => {
+const Feedback = ({ feedbacks, total, positivePercentage }) => {
   return (
     <>
       {feedbacks.map(([name, voices]) => {
@@ -18,10 +18,10 @@ const Statisctics = ({ feedbacks, total, positivePercentage }) => {
   );
 };
 
-Statisctics.propTypes = {
+Feedback.propTypes = {
   feedbacks: PropTypes.array.isRequired,
   total: PropTypes.number.isRequired,
   positivePercentage: PropTypes.number.isRequired,
 };
 
-export default Statisctics;
+export default Feedback;

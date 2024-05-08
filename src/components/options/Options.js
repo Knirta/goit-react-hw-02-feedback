@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import s from "./FeedbackOptions.module.css";
+import s from "./Options.module.css";
 
-const FeedbackOptions = ({ options, onLeaveFeedback }) => {
+const Options = ({ options, onLeaveFeedback, total, onReset }) => {
   return (
-    <>
+    <div className={s.Wrap}>
       {options.map((option) => {
         return (
           <button
@@ -17,12 +17,17 @@ const FeedbackOptions = ({ options, onLeaveFeedback }) => {
           </button>
         );
       })}
-    </>
+      {total > 0 && (
+        <button className={s.Option} onClick={onReset}>
+          Reset
+        </button>
+      )}
+    </div>
   );
 };
 
-FeedbackOptions.propTypes = {
+Options.propTypes = {
   options: PropTypes.array.isRequired,
 };
 
-export default FeedbackOptions;
+export default Options;
